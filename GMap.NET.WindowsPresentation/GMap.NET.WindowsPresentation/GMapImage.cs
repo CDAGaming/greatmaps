@@ -1,19 +1,14 @@
-﻿
-namespace GMap.NET.WindowsPresentation
+﻿namespace GMap.NET.WindowsPresentation
 {
-   using System.Collections.Generic;
-   using System.Collections.ObjectModel;
-   using System.Diagnostics;
-   using System.Windows;
-   using System.Windows.Media;
-   using System.Windows.Media.Imaging;
-   using GMap.NET.Internals;
-   using GMap.NET.MapProviders;
+    using System.Diagnostics;
+    using System.Windows.Media;
+    using System.Windows.Media.Imaging;
+    using GMap.NET.MapProviders;
 
-   /// <summary>
-   /// image abstraction
-   /// </summary>
-   public class GMapImage : PureImage
+    /// <summary>
+    /// image abstraction
+    /// </summary>
+    public class GMapImage : PureImage
    {
       public ImageSource Img;
 
@@ -121,12 +116,14 @@ namespace GMap.NET.WindowsPresentation
 
             if(m != null)
             {
-               ret = new GMapImage();
-               ret.Img = m;
-               if(ret.Img.CanFreeze)
-               {
-                  ret.Img.Freeze();
-               }
+                    ret = new GMapImage()
+                    {
+                        Img = m
+                    };
+                    if (ret.Img.CanFreeze)
+                    {
+                        ret.Img.Freeze();
+                    }
             }
          }
          return ret;

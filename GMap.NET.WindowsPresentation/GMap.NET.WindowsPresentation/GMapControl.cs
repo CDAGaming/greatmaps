@@ -1,5 +1,4 @@
-﻿
-namespace GMap.NET.WindowsPresentation
+﻿namespace GMap.NET.WindowsPresentation
 {
    using System;
    using System.Collections.Generic;
@@ -621,7 +620,7 @@ namespace GMap.NET.WindowsPresentation
 #endif
       }
 
-      void invalidatorEngage(object sender, ProgressChangedEventArgs e)
+      void InvalidatorEngage(object sender, ProgressChangedEventArgs e)
       {
          base.InvalidateVisual();
       }
@@ -692,7 +691,7 @@ namespace GMap.NET.WindowsPresentation
                   lazySetZoomToFitRect = null;
                }
             }
-            Core.OnMapOpen().ProgressChanged += new ProgressChangedEventHandler(invalidatorEngage);
+            Core.OnMapOpen().ProgressChanged += new ProgressChangedEventHandler(InvalidatorEngage);
             ForceUpdateOverlays();
 
             if(Application.Current != null)
@@ -911,12 +910,13 @@ namespace GMap.NET.WindowsPresentation
                            g.DrawRectangle(EmptytileBrush, EmptyTileBorders, new Rect(Core.tileRect.X, Core.tileRect.Y, Core.tileRect.Width, Core.tileRect.Height));
 
                            var ex = Core.FailedLoads[lt];
-                           FormattedText TileText = new FormattedText("Exception: " + ex.Message, System.Globalization.CultureInfo.CurrentUICulture, FlowDirection.LeftToRight, tileTypeface, 14, Brushes.Red);
-                           TileText.MaxTextWidth = Core.tileRect.Width - 11;
+                                    FormattedText TileText = new FormattedText("Exception: " + ex.Message, System.Globalization.CultureInfo.CurrentUICulture, FlowDirection.LeftToRight, tileTypeface, 14, Brushes.Red)
+                                    {
+                                        MaxTextWidth = Core.tileRect.Width - 11
+                                    };
+                                    g.DrawText(TileText, new Point(Core.tileRect.X + 11, Core.tileRect.Y + 11));
 
-                           g.DrawText(TileText, new System.Windows.Point(Core.tileRect.X + 11, Core.tileRect.Y + 11));
-
-                           g.DrawText(EmptyTileText, new System.Windows.Point(Core.tileRect.X + Core.tileRect.Width / 2 - EmptyTileText.Width / 2, Core.tileRect.Y + Core.tileRect.Height / 2 - EmptyTileText.Height / 2));
+                           g.DrawText(EmptyTileText, new Point(Core.tileRect.X + Core.tileRect.Width / 2 - EmptyTileText.Width / 2, Core.tileRect.Y + Core.tileRect.Height / 2 - EmptyTileText.Height / 2));
                         }
                      }
                   }
@@ -927,15 +927,19 @@ namespace GMap.NET.WindowsPresentation
 
                      if(tilePoint.PosXY == Core.centerTileXYLocation)
                      {
-                        FormattedText TileText = new FormattedText("CENTER:" + tilePoint.ToString(), System.Globalization.CultureInfo.CurrentUICulture, FlowDirection.LeftToRight, tileTypeface, 16, Brushes.Red);
-                        TileText.MaxTextWidth = Core.tileRect.Width;
-                        g.DrawText(TileText, new System.Windows.Point(Core.tileRect.X + Core.tileRect.Width / 2 - EmptyTileText.Width / 2, Core.tileRect.Y + Core.tileRect.Height / 2 - TileText.Height / 2));
+                                FormattedText TileText = new FormattedText("CENTER:" + tilePoint.ToString(), System.Globalization.CultureInfo.CurrentUICulture, FlowDirection.LeftToRight, tileTypeface, 16, Brushes.Red)
+                                {
+                                    MaxTextWidth = Core.tileRect.Width
+                                };
+                                g.DrawText(TileText, new Point(Core.tileRect.X + Core.tileRect.Width / 2 - EmptyTileText.Width / 2, Core.tileRect.Y + Core.tileRect.Height / 2 - TileText.Height / 2));
                      }
                      else
                      {
-                        FormattedText TileText = new FormattedText("TILE: " + tilePoint.ToString(), System.Globalization.CultureInfo.CurrentUICulture, FlowDirection.LeftToRight, tileTypeface, 16, Brushes.Red);
-                        TileText.MaxTextWidth = Core.tileRect.Width;
-                        g.DrawText(TileText, new System.Windows.Point(Core.tileRect.X + Core.tileRect.Width / 2 - EmptyTileText.Width / 2, Core.tileRect.Y + Core.tileRect.Height / 2 - TileText.Height / 2));
+                                FormattedText TileText = new FormattedText("TILE: " + tilePoint.ToString(), System.Globalization.CultureInfo.CurrentUICulture, FlowDirection.LeftToRight, tileTypeface, 16, Brushes.Red)
+                                {
+                                    MaxTextWidth = Core.tileRect.Width
+                                };
+                                g.DrawText(TileText, new Point(Core.tileRect.X + Core.tileRect.Width / 2 - EmptyTileText.Width / 2, Core.tileRect.Y + Core.tileRect.Height / 2 - TileText.Height / 2));
                      }
                   }
                }
@@ -1704,10 +1708,7 @@ namespace GMap.NET.WindowsPresentation
                   zoomtofit = SetZoomToFitRect(SelectedArea);
                }
 
-               if(OnSelectionChange != null)
-               {
-                  OnSelectionChange(SelectedArea, zoomtofit);
-               }
+                    OnSelectionChange?.Invoke(SelectedArea, zoomtofit);
             }
             else
             {
